@@ -59,7 +59,7 @@ $(() => {
 		$('.cover').fadeOut(1000, function() {
 			$(this).remove();
 			$('.video').show();
-			$('.video').find('iframe').attr('src', '#');
+			$('.video').find('iframe').attr('src', 'https://www.youtube.com/embed/91sFlP6aa5Q?autoplay=1');
 		});
 	}
 	function shoothScroll(e) {
