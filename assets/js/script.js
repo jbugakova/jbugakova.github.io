@@ -1,22 +1,23 @@
 $(() => {
 	$(".owl-carousel.head-carousel").owlCarousel({
-		items: 1,
-		margin: 10,
-		loop: true,
-		autoplay: true,
-		autoplayTimeout: 3000,
-		autoplayHoverPause: true
+	  items: 1,
+	  margin: 10,
+	  loop: true,
+	  autoplay: true,
+	  autoplayTimeout: 3000,
+	  autoplayHoverPause: true
 	});
 	$(".owl-carousel.people-say-carousel").owlCarousel({
-		items: 1,
-		loop: true,
-		autoplay: true,
-		startPosition: 2,
-		autoplayTimeout: 2000,
-		autoplayHoverPause: true
+	  items: 1,
+	  loop: true,
+	  autoplay: true,
+	  startPosition: 2,
+	  autoplayTimeout: 2000,
+	  autoplayHoverPause: true
 	});
-
+  
 	const navpanel = $('#navpanel');
+	let isMenuOpen = false;
 	
 	initialPageLoad();
 	
@@ -28,88 +29,102 @@ $(() => {
 	
 	
 	function initialPageLoad() {
-		navpanel.addClass('transition');
-		checkScroll();
-		toggleNavigationLinks();
+	  navpanel.addClass('transition');
+	  checkScroll();
+	  toggleNavigationLinks();
 	}
 	function checkScroll() {
-		let scrollOffset = getScrollTop();
+	  let scrollOffset = getScrollTop();
 	
-		if(scrollOffset >= 100) {
-			navpanel.addClass("scrolled-panel");
-		}
-		else {
-			navpanel.removeClass("scrolled-panel");
-		}
+	  if(scrollOffset >= 100) {
+		navpanel.addClass("scrolled-panel");
+	  }
+	  else {
+		navpanel.removeClass("scrolled-panel");
+	  }
 	}
 	function getScrollTop() {
-		return $(window).scrollTop();
+	  return $(window).scrollTop();
 	}
 	function onBurgerMenuToggle() {
-		$("#nav-toggle").toggleClass("active");
-		$("#topnav").toggleClass("active");
-	
-		if(!$("#topnav").hasClass("active") && getScrollTop() === 0) {
-				navpanel.removeClass("scrolled-panel");
-		} else {
-			navpanel.addClass("scrolled-panel");
-		}
+	  if(isMenuOpen) {
+		closeMenu();
+	  } else {
+		openMenu();
+	  }
+	}
+	function closeMenu() {
+	  isMenuOpen = false;
+	  $("#nav-toggle").removeClass("active");
+	  $("#topnav").removeClass("active");
+	  $('body').css('overflow', 'auto');
+  
+	  if(!$("#topnav").hasClass("active") && getScrollTop() === 0) {
+		navpanel.removeClass("scrolled-panel");
+	  }
+	}
+	function openMenu() {
+	  isMenuOpen = true;
+	  $("#nav-toggle").addClass("active");
+	  $("#topnav").addClass("active");
+	  $('body').css('overflow', 'hidden');
+	  navpanel.addClass("scrolled-panel");
 	}
 	function onPlayVideoClick() {
-		$('.cover').fadeOut(1000, function() {
-			$(this).remove();
-			$('.video').show();
-			$('.video').find('iframe').attr('src', 'https://www.youtube.com/embed/91sFlP6aa5Q?autoplay=1');
-		});
+	  $('.cover').fadeOut(1000, function() {
+		$(this).remove();
+		$('.video').show();
+		$('.video').find('iframe').attr('src', 'https://www.youtube.com/embed/91sFlP6aa5Q?autoplay=1');
+	  });
 	}
 	function shoothScroll(e) {
-		e.preventDefault();
+	  e.preventDefault();
 	
-		if(isBurgerMenuOpened) {
-			onBurgerMenuToggle();
-		}
+	  if(isBurgerMenuOpened) {
+		onBurgerMenuToggle();
+	  }
 	
-		const sectionId = $(this).data("scroll");
-		const blockOffset = $(sectionId).offset().top;
+	  const sectionId = $(this).data("scroll");
+	  const blockOffset = $(sectionId).offset().top;
 	
-		$("html,body").animate({
-			scrollTop: blockOffset - getCurrentNavPanelHeight() + 1
-		}, 500);
+	  $("html,body").animate({
+		scrollTop: blockOffset - getCurrentNavPanelHeight() + 1
+	  }, 500);
 	}
 	function isBurgerMenuOpened() {
-		return $("#nav-toggle").hasClass('active');
+	  return $("#nav-toggle").hasClass('active');
 	}
 	function toggleNavigationLinks() {
-		const navPanelHeight = getCurrentNavPanelHeight();
-		const currentWindowTopPos = $(window).scrollTop();
-		const aboutTopPosition = $('#about').offset().top - navPanelHeight;
-		const expertiseTopPosition = $('#expertise').offset().top - navPanelHeight;
-		const teamTopPosition = $('#team').offset().top - navPanelHeight;
-		const worksTopPosition = $('#works').offset().top - navPanelHeight;
-		const peopleSayTopPosition = $('#people-say').offset().top - navPanelHeight;
-		const contactTopPosition = $('#contact').offset().top - navPanelHeight;
+	  const navPanelHeight = getCurrentNavPanelHeight();
+	  const currentWindowTopPos = $(window).scrollTop();
+	  const aboutTopPosition = $('#about').offset().top - navPanelHeight;
+	  const expertiseTopPosition = $('#expertise').offset().top - navPanelHeight;
+	  const teamTopPosition = $('#team').offset().top - navPanelHeight;
+	  const worksTopPosition = $('#works').offset().top - navPanelHeight;
+	  const peopleSayTopPosition = $('#people-say').offset().top - navPanelHeight;
+	  const contactTopPosition = $('#contact').offset().top - navPanelHeight;
 	
-		if(currentWindowTopPos >= contactTopPosition) {
-			activateCurrentAnchor('contact');
-		} else if(currentWindowTopPos >= peopleSayTopPosition) {
-			activateCurrentAnchor('people-say');
-		} else if(currentWindowTopPos >= worksTopPosition) {
-			activateCurrentAnchor('works');
-		} else if(currentWindowTopPos >= teamTopPosition) {
-			activateCurrentAnchor('team');
-		} else if(currentWindowTopPos >= expertiseTopPosition) {
-			activateCurrentAnchor('expertise');
-		} else if(currentWindowTopPos >= aboutTopPosition) {
-			activateCurrentAnchor('about');;
-		} else {
-			activateCurrentAnchor('home');
-		}
+	  if(currentWindowTopPos >= contactTopPosition) {
+		activateCurrentAnchor('contact');
+	  } else if(currentWindowTopPos >= peopleSayTopPosition) {
+		activateCurrentAnchor('people-say');
+	  } else if(currentWindowTopPos >= worksTopPosition) {
+		activateCurrentAnchor('works');
+	  } else if(currentWindowTopPos >= teamTopPosition) {
+		activateCurrentAnchor('team');
+	  } else if(currentWindowTopPos >= expertiseTopPosition) {
+		activateCurrentAnchor('expertise');
+	  } else if(currentWindowTopPos >= aboutTopPosition) {
+		activateCurrentAnchor('about');;
+	  } else {
+		activateCurrentAnchor('home');
+	  }
 	}
 	function getCurrentNavPanelHeight() {
-		return Number(navpanel.css('height').replace('px', ''));
+	  return Number(navpanel.css('height').replace('px', ''));
 	}
 	function activateCurrentAnchor(sectionId) {
-		$('.nav-link.active').removeClass('active');
-		$('a[data-scroll="#' + sectionId + '"]').addClass('active');
+	  $('.nav-link.active').removeClass('active');
+	  $('a[data-scroll="#' + sectionId + '"]').addClass('active');
 	}
-});
+  });
