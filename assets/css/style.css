@@ -592,6 +592,8 @@ body {
 	opacity: 0.8;
 }
 .works-section .portfolio-container {
+	max-width: 1400px;
+	margin: auto;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
